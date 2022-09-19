@@ -11,7 +11,7 @@ const usersReducer = (state = initialState, { type, payload } = {}) => {
         case SET_USERS:
             return {
                 ...state,
-                users: [...payload],
+                users: payload,
             }
 
         default:

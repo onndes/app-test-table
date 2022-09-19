@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { UserDataItem } from './UserItem'
 
 export const Wrapper = styled.div`
     width: 1000px;
@@ -10,22 +11,6 @@ export const TableContainer = styled.div`
     overflow-y: scroll;
 `
 
-export const UserContainer = styled.div`
-    background-color: #dedede4f;
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr 6fr 2fr 2fr;
-    margin: 5px 5px;
-    grid: 10px;
-`
-export const UserDataItem = styled.p`
-    padding: 14px 7px;
-    text-align: left;
-    display: flex;
-    border-top: 1px solid rgb(151, 151, 151);
-    justify-content: ${(props) => (props.center ? 'center' : 'top')};
-    align-items: ${(props) => (props.center ? 'center' : 'left')};
-    position: relative;
-`
 export const TitleColumn = styled(UserDataItem)`
     border-top: none;
     font-weight: 600;
