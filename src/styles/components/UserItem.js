@@ -8,6 +8,7 @@ export const UserContainer = styled.div`
     grid: 10px;
 `
 export const UserDataItem = styled.p`
+    overflow: hidden;
     padding: 14px 7px;
     text-align: left;
     display: flex;
@@ -15,6 +16,10 @@ export const UserDataItem = styled.p`
     justify-content: ${(props) => (props.hCenter ? 'center' : 'top')};
     align-items: ${(props) => (props.vCenter ? 'center' : 'left')};
     position: relative;
+`
+export const UserDataAria = styled(UserDataItem)`
+    max-height: 100px;
+    overflow-y: scroll;
 `
 export const ItemEditable = styled.input`
     padding: 14px 7px;

@@ -7,10 +7,21 @@ import {
     UserContainer,
     UserDataItem,
 } from '../styles/components/UserItem'
+import loading from '../common/svg/loading.svg'
+import { enumStatus, enumStatusAction } from '../common/enumStatus'
+import ConfirmModal from './ConfirmModal'
 
-const UserItemEditable = ({ user, setEditableUser, editUser }) => {
+const UserItemEditable = ({
+    user,
+    setEditableUser,
+    editUser,
+    status,
+    handleStatus,
+}) => {
+    const [showModalConfirm, setShowModalConfirm] = React.useState(false)
     const handleClose = () => {
         setEditableUser(null)
+        handleStatus(enumStatusAction.EDIT, null)
     }
 
     const handleChangeInput = (e, key) => {
@@ -19,6 +30,15 @@ const UserItemEditable = ({ user, setEditableUser, editUser }) => {
             [key]: e.target.value,
         })
     }
+    React.useEffect(() => {
+        if (
+            status[enumStatusAction.EDIT] ===
+            (enumStatus.SUCCESS || enumStatus.ERROR)
+        ) {
+            handleClose()
+            handleStatus(enumStatusAction.EDIT, null)
+        }
+    }, [status])
 
     return (
         <UserContainer>
@@ -37,6 +57,7 @@ const UserItemEditable = ({ user, setEditableUser, editUser }) => {
                 <ItemEditable
                     hCenter
                     vCenter
+                    type="number"
                     value={user.age}
                     onChange={(e) => handleChangeInput(e, 'age')}
                 />
@@ -50,15 +71,36 @@ const UserItemEditable = ({ user, setEditableUser, editUser }) => {
                 />
             </UserDataItem>
             <UserDataItem hCenter vCenter>
-                <Button onClick={editUser} bg="rgb(32, 144, 1)">
-                    Save
-                </Button>
+                {status[enumStatusAction.EDIT] !== enumStatus.LOADING ? (
+                    <Button
+                        onClick={() =>
+                            setShowModalConfirm(enumStatusAction.EDIT)
+                        }
+                        bg="rgb(32, 144, 1)"
+                    >
+                        Save
+                    </Button>
+                ) : (
+                    <img src={loading} alt="" width="50px" />
+                )}
             </UserDataItem>
             <UserDataItem hCenter vCenter>
-                <Button bg="rgb(88, 88, 88)" onClick={handleClose}>
+                <Button
+                    disabled={
+                        status[enumStatusAction.EDIT] === enumStatus.LOADING
+                    }
+                    bg="rgb(88, 88, 88)"
+                    onClick={handleClose}
+                >
                     Close
                 </Button>
             </UserDataItem>
+            {showModalConfirm === enumStatusAction.EDIT && (
+                <ConfirmModal
+                    handleConfirm={() => editUser()}
+                    handleClose={() => setShowModalConfirm(false)}
+                />
+            )}
         </UserContainer>
     )
 }

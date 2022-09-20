@@ -1,6 +1,16 @@
 import { all } from 'redux-saga/effects'
-import { usersWatcher } from './usersSaga'
+import {
+    addUserWatcher,
+    deleteUserWatcher,
+    editUserWatcher,
+    fetchUsersWatcher,
+} from './usersSaga'
 
 export function* rootWatcher() {
-    yield all([usersWatcher()])
+    yield all([
+        fetchUsersWatcher(),
+        addUserWatcher(),
+        deleteUserWatcher(),
+        editUserWatcher(),
+    ])
 }

@@ -11,4 +11,13 @@ export const usersAPI = {
     getUsers() {
         return instance.get('/users')
     },
+    addUser(userData) {
+        return instance.post('/users', userData)
+    },
+    editUser(userData) {
+        return instance.put(`/users/${userData.id}`, userData)
+    },
+    deleteUser(userId) {
+        return instance.delete(`/users/${userId}`)
+    },
 }
